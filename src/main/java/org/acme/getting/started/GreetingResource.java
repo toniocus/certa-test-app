@@ -21,6 +21,13 @@ public class GreetingResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Path("/world/{name}")
+    public String world(String name) {
+        return String.format("Hello, the world is waiting for %s to be ready.", name);
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return "hello";
     }
