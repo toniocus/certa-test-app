@@ -10,6 +10,13 @@ public class BadResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Path("/3")
+    public String two() {
+        return "We are bad boys VERSION II.";
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/boys")
     public String boys() {
         return "We are the WORST Group of Boys that never existed.";
