@@ -10,7 +10,7 @@ public class BadResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/3")
+    @Path("/2")
     public String two() {
         return "We are Bad Boys VERSION II.";
     }
