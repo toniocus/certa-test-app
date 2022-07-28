@@ -12,7 +12,7 @@ public class BadResource {
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/boys")
     public String boys() {
-        return "We are really very very BAD GROUP OF BOYS.";
+        return "We are the WORST Group of Boys that never existed.";
     }
 
 
