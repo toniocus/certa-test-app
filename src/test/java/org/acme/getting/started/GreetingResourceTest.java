@@ -1,10 +1,10 @@
 package org.acme.getting.started;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
 
 import java.util.UUID;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -18,7 +18,7 @@ public class GreetingResourceTest {
                 .when().get("/hello")
                 .then()
                 .statusCode(200)
-                .body(is("hello"));
+                .body(CoreMatchers.containsString("hello"));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class GreetingResourceTest {
                 .when().get("/hello/greeting/{name}")
                 .then()
                 .statusCode(200)
-                .body(is("hello " + uuid));
+                .body(CoreMatchers.containsString(uuid));
     }
 
 }
