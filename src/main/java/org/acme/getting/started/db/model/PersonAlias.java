@@ -1,9 +1,11 @@
-package org.acme.getting.started.db;
+package org.acme.getting.started.db.model;
 
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 })
 public class PersonAlias extends CertaEntity {
 
+    @Enumerated(EnumType.STRING)
     public PersonAliasType type;
     public String alias;
     @Column(name = "person_id")

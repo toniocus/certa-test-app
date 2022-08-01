@@ -1,4 +1,4 @@
-package org.acme.getting.started.db;
+package org.acme.getting.started.db.model;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -8,6 +8,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
@@ -32,6 +34,8 @@ public class Person extends CertaEntity {
 
     public String name;
     public LocalDate birth;
+
+    @Enumerated(EnumType.STRING)
     public PersonStatus status;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL})

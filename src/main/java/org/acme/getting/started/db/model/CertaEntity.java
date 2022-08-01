@@ -1,4 +1,4 @@
-package org.acme.getting.started.db;
+package org.acme.getting.started.db.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
