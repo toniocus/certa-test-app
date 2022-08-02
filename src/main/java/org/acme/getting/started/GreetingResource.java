@@ -12,17 +12,18 @@ public class GreetingResource {
     @Inject
     GreetingService service;
 
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/greeting/{name}")
-    public String greeting(String name) {
-        return service.greeting(name);
+    public String greeting(final String name) {
+        return this.service.greeting(name);
     }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/world/{name}")
-    public String world(String name) {
+    public String world(final String name) {
         return String.format("Hello, the world is waiting for %s to be ready.", name);
     }
 
