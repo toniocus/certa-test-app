@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -44,6 +45,12 @@ public class PersonResource {
     @Path("/add")
     public PersonFullDTO add(final PersonFullDTO person) {
         return this.service.add(person);
+    }
+
+    @PUT
+    @Path("/update")
+    public PersonFullDTO update(final PersonFullDTO person) {
+        return this.service.update(person);
     }
 
 

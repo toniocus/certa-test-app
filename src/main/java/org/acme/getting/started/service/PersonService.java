@@ -50,12 +50,25 @@ public class PersonService {
     @Transactional
     public PersonFullDTO add(final PersonFullDTO dto) {
 
-        Person person = this.personMapper.toNewPersonFull(dto);
+        Person person = this.personMapper.toNewPerson(dto);
 
 //        person.id = null;
-        person.aliases.forEach(d -> d.id = null);
-        person.persistAndFlush();
+//        person.aliases.forEach(d -> d.id = null);
+//        person.persistAndFlush();
 
+        person.persistAndFlush();
+        return this.personMapper.fromPersonFull(person);
+    }
+
+    @Transactional
+    public PersonFullDTO update(final PersonFullDTO dto) {
+
+        Person person = (Person) Person.findByIdOptional(dto.id)
+                .orElseThrow(() -> new RuntimeException("No able to find Person with Id: " + dto.id));
+
+        this.personMapper.update(person, dto);
+
+        person.persistAndFlush();
         return this.personMapper.fromPersonFull(person);
     }
 
