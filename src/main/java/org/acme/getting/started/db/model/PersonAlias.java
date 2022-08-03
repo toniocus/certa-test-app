@@ -10,6 +10,9 @@ import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity(name = "person_alias")
 @Table(indexes = {
         @Index(name = "person_alias_unq_idx", columnList = "alias, type, id", unique = true)
@@ -23,8 +26,14 @@ public class PersonAlias extends CertaEntity {
 //    @Column(name = "person_id")
 //    public Long personId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     public Person person;
+
+    @JsonProperty("personId")
+    private Long jsonPersonId() {
+        return this.person.id;
+    }
 
     public PersonAlias() {
     }

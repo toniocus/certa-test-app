@@ -18,9 +18,13 @@ public interface AliasMapper {
     @Mapping(source = "id", target = "id", ignore = true)
     PersonAlias     toNewAlias(PersonAliasDTO dto);
 
+//    @Mapping(target = "id", source = "personId")
+//    @Mapping(target = "id", source = "id", ignore = true)
     void updateAlias(@MappingTarget PersonAlias alias, PersonAliasDTO dto);
 
     @IterableMapping(elementTargetType = PersonAliasDTO.class)
     List<PersonAliasDTO>  fromAliases(List<PersonAlias> list);
+
+
 
 }

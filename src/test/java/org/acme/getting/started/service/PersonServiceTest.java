@@ -23,6 +23,11 @@ class PersonServiceTest {
         System.out.println(this.service.findList());
     }
 
+    @Test
+    void findAll() {
+        this.service.init();
+        System.out.println(this.service.findAll());
+    }
 
     @Test
     void findByNameTest() {
