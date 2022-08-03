@@ -11,8 +11,11 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.acme.getting.started.db.model.Person;
+import org.acme.getting.started.db.model.PersonAlias;
 import org.acme.getting.started.db.model.PersonAliasType;
 import org.acme.getting.started.db.model.PersonStatus;
+import org.acme.getting.started.db.model.dto.AliasMapper;
+import org.acme.getting.started.db.model.dto.PersonAliasDTO;
 import org.acme.getting.started.db.model.dto.PersonDTO;
 import org.acme.getting.started.db.model.dto.PersonFullDTO;
 import org.acme.getting.started.db.model.dto.PersonMapper;
@@ -22,6 +25,10 @@ public class PersonService {
 
     @Inject
     private PersonMapper personMapper;
+
+    @Inject
+    AliasMapper aliasMapper;
+
 
     @Transactional
     public void init() {
@@ -36,6 +43,8 @@ public class PersonService {
             p.addAlias(PersonAliasType.EMAIL, "me@family.com");
             p.persistAndFlush();
 
+            System.out.println("NEW PERSON: " + p.id);
+
             Person p1 = new Person();
             p1.birth = LocalDate.now().minus(80L, ChronoUnit.YEARS);
             p1.name = "John Senior Doe";
@@ -43,6 +52,8 @@ public class PersonService {
             p1.addAlias(PersonAliasType.DNI, "9999");
             p1.addAlias(PersonAliasType.EMAIL, "granpa@family.com");
             p1.persistAndFlush();
+
+            System.out.println("NEW PERSON: " + p1.id);
         }
 
     }
@@ -102,6 +113,11 @@ public class PersonService {
             p.aliases.size();
         });
         return persons;
+    }
+
+    @Transactional
+    public List<PersonAliasDTO> findAllAlias() {
+        return this.aliasMapper.fromAliases(PersonAlias.findAll().list());
     }
 
     @Transactional

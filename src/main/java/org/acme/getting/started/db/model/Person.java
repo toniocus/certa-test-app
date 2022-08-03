@@ -46,7 +46,7 @@ public class Person extends CertaEntity {
 
 
     public boolean addAlias(final PersonAliasType type, final String value) {
-        return this.aliases.add(new PersonAlias(type, value));
+        return this.aliases.add(new PersonAlias(this, type, value));
     }
 
     @Override

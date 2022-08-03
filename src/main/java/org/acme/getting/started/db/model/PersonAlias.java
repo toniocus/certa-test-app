@@ -2,11 +2,12 @@ package org.acme.getting.started.db.model;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Index;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "person_alias")
@@ -18,17 +19,21 @@ public class PersonAlias extends CertaEntity {
     @Enumerated(EnumType.STRING)
     public PersonAliasType type;
     public String alias;
-    @Column(name = "person_id")
-    public Long personId;
+
+//    @Column(name = "person_id")
+//    public Long personId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Person person;
 
     public PersonAlias() {
     }
 
-    public PersonAlias(final PersonAliasType type, final String value) {
+    public PersonAlias(final Person person, final PersonAliasType type, final String value) {
         this.type = type;
         this.alias = value;
+        this.person = person;
     }
-
 
     @Override
     public int hashCode() {
@@ -50,7 +55,7 @@ public class PersonAlias extends CertaEntity {
 
     @Override
     public String toString() {
-        return String.format("PersonAlias [type=%s, alias=%s, personId=%s]", this.type, this.alias, this.personId);
+        return String.format("PersonAlias [type=%s, alias=%s, personId=%s]", this.type, this.alias, this.person.id);
     }
 
 
