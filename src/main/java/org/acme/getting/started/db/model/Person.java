@@ -18,6 +18,8 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 
 @Entity
 @Table(indexes = {
@@ -34,6 +36,7 @@ public class Person extends CertaEntity {
 
     public String name;
     public LocalDate birth;
+    public JsonNode properties;
 
     @Enumerated(EnumType.STRING)
     public PersonStatus status;
@@ -43,6 +46,8 @@ public class Person extends CertaEntity {
             , foreignKey = @ForeignKey(name = "person_alias_person_fk")
             )
     public Set<PersonAlias> aliases = new HashSet<>();
+
+
 
 
     public boolean addAlias(final PersonAliasType type, final String value) {

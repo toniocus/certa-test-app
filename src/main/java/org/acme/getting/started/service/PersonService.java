@@ -3,12 +3,15 @@ package org.acme.getting.started.service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 import org.acme.getting.started.db.model.Person;
 import org.acme.getting.started.db.model.PersonAlias;
@@ -39,6 +42,9 @@ public class PersonService {
             p.birth = LocalDate.now().minus(30L, ChronoUnit.YEARS);
             p.name = "John Doe";
             p.status = PersonStatus.ALIVE;
+            p.properties = JsonNodeFactory.instance.objectNode()
+                    .put("pelo", "rojo")
+                    .put("ojos", "marrones");
             p.addAlias(PersonAliasType.DNI, "1111");
             p.addAlias(PersonAliasType.EMAIL, "me@family.com");
             p.persistAndFlush();
@@ -49,6 +55,10 @@ public class PersonService {
             p1.birth = LocalDate.now().minus(80L, ChronoUnit.YEARS);
             p1.name = "John Senior Doe";
             p1.status = PersonStatus.DEATH;
+            p1.properties = JsonNodeFactory.instance.objectNode()
+                    .put("pelo", "marron claro")
+                    .put("ojos", "azules");
+
             p1.addAlias(PersonAliasType.DNI, "9999");
             p1.addAlias(PersonAliasType.EMAIL, "granpa@family.com");
             p1.persistAndFlush();
@@ -77,7 +87,11 @@ public class PersonService {
         Person person = (Person) Person.findByIdOptional(dto.id)
                 .orElseThrow(() -> new RuntimeException("No able to find Person with Id: " + dto.id));
 
+        Set<PersonAlias> modifiedAlias = this.aliasMapper.updatedPersonAlias(dto.aliases, person.aliases);
+
         this.personMapper.update(person, dto);
+        person.aliases = modifiedAlias;
+        person.aliases.forEach(a -> a.person = person);
 
         person.persistAndFlush();
         return this.personMapper.fromPersonFull(person);

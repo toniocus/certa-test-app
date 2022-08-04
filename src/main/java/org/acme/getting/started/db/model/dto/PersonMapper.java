@@ -18,7 +18,6 @@ public interface PersonMapper {
     @Mapping(source = "id", target = "id", ignore = true)
     Person          toNewPerson(PersonFullDTO dto);
 
-    @Mapping(source = "id", target = "id", ignore = true)
     void update(@MappingTarget Person person, PersonFullDTO dto);
 
     PersonDTO  fromPerson(Person person);
