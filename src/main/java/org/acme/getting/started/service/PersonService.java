@@ -5,8 +5,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -22,15 +22,25 @@ import org.acme.getting.started.db.model.dto.PersonAliasDTO;
 import org.acme.getting.started.db.model.dto.PersonDTO;
 import org.acme.getting.started.db.model.dto.PersonFullDTO;
 import org.acme.getting.started.db.model.dto.PersonMapper;
+import org.acme.getting.started.strategy.MyStrategyBase;
+import org.acme.getting.started.strategy.StrategyContext;
+import org.acme.getting.started.strategy.StrategyFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@ApplicationScoped
+@Singleton
 public class PersonService {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonService.class);
 
     @Inject
     private PersonMapper personMapper;
 
     @Inject
     AliasMapper aliasMapper;
+
+    @Inject
+    StrategyFactory factory;
 
 
     @Transactional
@@ -95,6 +105,24 @@ public class PersonService {
 
         person.persistAndFlush();
         return this.personMapper.fromPersonFull(person);
+    }
+
+
+    @Transactional
+    public List<PersonDTO> findListWithStrategy(final Long type) {
+
+        log.info("Service findListWithStrategy...");
+
+        log.info("Obtaining strategy.....");
+        MyStrategyBase strategy = this.factory.createStrategy(type, new StrategyContext());
+        log.info("Strategy obtained.");
+
+        strategy.generateRequest();
+
+        List<PersonDTO> list = this.personMapper.fromPersons(Person.findAll().list());
+        list.forEach(p ->  p.name = strategy.getIdString());
+
+        return list;
     }
 
     @Transactional

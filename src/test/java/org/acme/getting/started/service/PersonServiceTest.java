@@ -24,6 +24,23 @@ class PersonServiceTest {
     }
 
     @Test
+    @Transactional
+    void updateName() {
+        this.service.init();
+
+        Person person = Person.findById(1L);
+        person.name = "NEW " + person.name;
+
+        person.persistAndFlush();
+    }
+
+    @Test
+    void findPersonList() {
+        this.service.init();
+        System.out.println(this.service.findListWithStrategy(1L));
+    }
+
+    @Test
     void findAll() {
         this.service.init();
         System.out.println(this.service.findAll());
@@ -44,6 +61,20 @@ class PersonServiceTest {
         List<PersonAliasDTO> allAlias = this.service.findAllAlias();
 
         allAlias.forEach(a -> System.out.println(a.personId));
+
+    }
+
+    @Test
+    void testEnum() {
+//
+//        for (StrategyEnum e : StrategyEnum.values()) {
+//
+//            System.out.println(e.name()
+//                    + " : " + e.getType()
+//                    + " / " + e.getType().getType()
+//                    + " / " + e.getType().getRawType()
+//                    );
+//        }
 
     }
 

@@ -33,7 +33,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 })
 public class Person extends CertaEntity {
 
-
     public String name;
     public LocalDate birth;
     public JsonNode properties;

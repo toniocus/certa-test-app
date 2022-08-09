@@ -32,14 +32,16 @@ public interface AliasMapper {
 
     default Set<PersonAlias> updatedPersonAlias(final Set<PersonAliasDTO> modifiedDTO, final Set<PersonAlias>  existent) {
         Set<PersonAlias> modified = fromAliasesDTO(modifiedDTO);
-        existent.addAll(modified);
 
+        // Delete missing
         for (Iterator<PersonAlias> it = existent.iterator(); it.hasNext();) {
             if (!modified.contains(it.next())) {
                 it.remove();
             }
         }
 
+        // Add new ones
+        existent.addAll(modified);
         return existent;
     }
 

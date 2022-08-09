@@ -13,12 +13,14 @@ import org.mapstruct.MappingTarget;
 public interface PersonMapper {
 
 
+    PersonNameDTO   fromPersonName(Person person);
     PersonFullDTO   fromPersonFull(Person person);
 
     @Mapping(source = "id", target = "id", ignore = true)
     Person          toNewPerson(PersonFullDTO dto);
 
     void update(@MappingTarget Person person, PersonFullDTO dto);
+    void updateName(@MappingTarget Person person, PersonNameDTO dto);
 
     PersonDTO  fromPerson(Person person);
 

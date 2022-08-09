@@ -15,9 +15,14 @@ import org.acme.getting.started.db.model.Person;
 import org.acme.getting.started.db.model.dto.PersonDTO;
 import org.acme.getting.started.db.model.dto.PersonFullDTO;
 import org.acme.getting.started.service.PersonService;
+import org.jboss.resteasy.reactive.RestPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/person")
 public class PersonResource {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonResource.class);
 
     @Inject
     PersonService service;
@@ -32,6 +37,15 @@ public class PersonResource {
     @Path("/list")
     public List<PersonDTO> list(final String name) {
         return this.service.findList();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/listPerson/{type}")
+    public List<PersonDTO> listComplex(@RestPath final Long type) {
+
+        log.info("Calling listPerson....");
+        return this.service.findListWithStrategy(type);
     }
 
     @GET
