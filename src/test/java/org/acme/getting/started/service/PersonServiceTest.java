@@ -26,7 +26,6 @@ class PersonServiceTest {
     @Test
     @Transactional
     void updateName() {
-        this.service.init();
 
         Person person = Person.findById(1L);
         person.name = "NEW " + person.name;
@@ -36,19 +35,16 @@ class PersonServiceTest {
 
     @Test
     void findPersonList() {
-        this.service.init();
         System.out.println(this.service.findListWithStrategy(1L));
     }
 
     @Test
     void findAll() {
-        this.service.init();
         System.out.println(this.service.findAll());
     }
 
     @Test
     void findByNameTest() {
-        this.service.init();
         List<Person> persons = this.service.findByNamePattern("doe");
 
         System.out.println(persons.get(0).aliases.iterator().next().person.id);
@@ -56,8 +52,6 @@ class PersonServiceTest {
 
     @Test
     void finalAllAliasTest() {
-
-        this.service.init();
         List<PersonAliasDTO> allAlias = this.service.findAllAlias();
 
         allAlias.forEach(a -> System.out.println(a.personId));

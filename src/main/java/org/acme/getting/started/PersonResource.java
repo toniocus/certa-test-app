@@ -2,7 +2,6 @@ package org.acme.getting.started;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -26,11 +25,6 @@ public class PersonResource {
 
     @Inject
     PersonService service;
-
-    @PostConstruct
-    void init() {
-        this.service.init();
-    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

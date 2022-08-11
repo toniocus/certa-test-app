@@ -20,11 +20,9 @@ public abstract class MyStrategyBase implements MyStrategy {
 
     void initialize(final StrategyContext context) {
 
-        /*
         if (this.context != null) {
             throw new RuntimeException("You cannot initialize Strategy more than once");
         }
-        */
 
         this.context = context;
     }

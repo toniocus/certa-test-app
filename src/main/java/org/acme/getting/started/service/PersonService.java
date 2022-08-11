@@ -1,7 +1,5 @@
 package org.acme.getting.started.service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
@@ -11,12 +9,8 @@ import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-
 import org.acme.getting.started.db.model.Person;
 import org.acme.getting.started.db.model.PersonAlias;
-import org.acme.getting.started.db.model.PersonAliasType;
-import org.acme.getting.started.db.model.PersonStatus;
 import org.acme.getting.started.db.model.dto.AliasMapper;
 import org.acme.getting.started.db.model.dto.PersonAliasDTO;
 import org.acme.getting.started.db.model.dto.PersonDTO;
@@ -41,42 +35,6 @@ public class PersonService {
 
     @Inject
     StrategyFactory factory;
-
-
-    @Transactional
-    public void init() {
-
-        if (Person.findById(1L) == null) {
-
-            Person p = new Person();
-            p.birth = LocalDate.now().minus(30L, ChronoUnit.YEARS);
-            p.name = "John Doe";
-            p.status = PersonStatus.ALIVE;
-            p.properties = JsonNodeFactory.instance.objectNode()
-                    .put("pelo", "rojo")
-                    .put("ojos", "marrones");
-            p.addAlias(PersonAliasType.DNI, "1111");
-            p.addAlias(PersonAliasType.EMAIL, "me@family.com");
-            p.persistAndFlush();
-
-            System.out.println("NEW PERSON: " + p.id);
-
-            Person p1 = new Person();
-            p1.birth = LocalDate.now().minus(80L, ChronoUnit.YEARS);
-            p1.name = "John Senior Doe";
-            p1.status = PersonStatus.DEATH;
-            p1.properties = JsonNodeFactory.instance.objectNode()
-                    .put("pelo", "marron claro")
-                    .put("ojos", "azules");
-
-            p1.addAlias(PersonAliasType.DNI, "9999");
-            p1.addAlias(PersonAliasType.EMAIL, "granpa@family.com");
-            p1.persistAndFlush();
-
-            System.out.println("NEW PERSON: " + p1.id);
-        }
-
-    }
 
     @Transactional
     public PersonFullDTO add(final PersonFullDTO dto) {
