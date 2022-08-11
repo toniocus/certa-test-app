@@ -2,11 +2,11 @@
 -- ===========================================================
 -- DROP
 -- ===========================================================    
--- alter table if exists person_alias 
---    drop constraint if exists person_alias_person_fk;
--- 
--- drop table if exists person cascade;
--- drop table if exists person_alias cascade;
+alter table if exists person_alias 
+   drop constraint if exists person_alias_person_fk;
+
+drop table if exists person cascade;
+drop table if exists person_alias cascade;
 
     
 -- ===========================================================
