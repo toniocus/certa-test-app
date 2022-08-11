@@ -18,7 +18,7 @@ public class SfAccount extends PanacheEntityBase {
 
     @Id
     public Integer id;
-    public String sfid;
+
 
     public String name;
     public String description;
@@ -32,6 +32,9 @@ public class SfAccount extends PanacheEntityBase {
     @Column(name = "active__c")
     public String active;
 
+    @Column(updatable = false)
+    private String sfid;
+
     @Column(name = "_hc_lastop", updatable = false)
     @JsonIgnore
     private String lastOperation;
@@ -40,6 +43,9 @@ public class SfAccount extends PanacheEntityBase {
     @JsonIgnore
     private String lastError;
 
+    public String getSfid() {
+        return this.sfid;
+    }
 
     public String getLastOperation() {
         return this.lastOperation;
